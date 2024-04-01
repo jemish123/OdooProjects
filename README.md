@@ -1,2 +1,2 @@
 # OdooProjects
-This repository is to see development phases of Odoo-Learning
+This repository is to see development phases of Odoo-Learning.
