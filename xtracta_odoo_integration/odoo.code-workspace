@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../odoo"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"python.languageServer": "None"
+	}
+}

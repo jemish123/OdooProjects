@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xtracta_columns,xtracta_columns,model_xtracta_columns,account.group_account_manager,1,1,1,1
+access_xtracta_database,xtracta_database,model_xtracta_database,account.group_account_manager,1,1,1,1
+access_xtracta_log,xtracta_log,model_xtracta_log,account.group_account_manager,1,1,1,1
+access_xtracta_log_line,xtracta_log_line,model_xtracta_log_line,account.group_account_manager,1,1,1,1
+
+

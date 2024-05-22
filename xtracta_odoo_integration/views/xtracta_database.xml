@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="xtracta_view_tree" model="ir.ui.view">
+            <field name="name">xtracta_view_tree</field>
+            <field name="model">xtracta.database</field>
+            <field name="arch" type="xml">
+                <tree string="xtracta_tree">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="xtracta_database_view_form" model="ir.ui.view">
+            <field name="name">xtracta_database_view_form</field>
+            <field name="model">xtracta.database</field>
+            <field name="arch" type="xml">
+                <form string="xtracta_database_form">
+                    <header>
+                        <button type="object" name="import_columns" string="Import Column"
+                                class="btn btn-outline-primary"  attrs="{'invisible': [('xtracta_table_type', '=', 'order')]}" />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_redirect_to_product" type="object" class="oe_stat_button"
+                                    icon="fa-bitbucket-square" string="Product" attrs="{'invisible': [('xtracta_table_type', '!=', 'product')]}" >
+                            </button>
+                            <button name="action_redirect_to_customer" type="object" class="oe_stat_button"
+                                    icon="fa-users" string="Customer" attrs="{'invisible': [('xtracta_table_type', '!=', 'customer')]}">
+                            </button>
+                            <button name="action_redirect_to_order" type="object" class="oe_stat_button"
+                                    icon="fa-bars" string="Orders" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')]}">
+                            </button>
+                            <button name="action_redirect_to_column" type="object" class="oe_stat_button"
+                                    icon="fa-list" string="Column" attrs="{'invisible': [('xtracta_table_type', '=', 'order')]}">
+                            </button>
+                            <button name="action_redirect_to_log" type="object" class="oe_stat_button"
+                                    icon="fa-book" string="Log Message" />
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="xtracta_table_type" required="1" widget="radio"/>
+                            </group>
+                            <group>
+                                <field name="xtracta_api" required="1"/>
+                                <field name="xtracta_api_key" required="1"/>
+                                <field name="xtracta_database_id" attrs="{'required': [('xtracta_table_type', '!=', 'order')], 'invisible': [('xtracta_table_type', '=', 'order')]}" />
+                                <field name="xtracta_workflow_id"  attrs="{'invisible': [('xtracta_table_type', '!=', 'order')], 'required': [('xtracta_table_type', '=', 'order')]}"/>
+                                <field name="xtracta_document_status" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')],'required': [('xtracta_table_type', '=', 'order')]}" />
+                                <field name="warehouse_id" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')],'required': [('xtracta_table_type', '=', 'order')]}" />
+                                <!--<field name="tax_id" widget="many2many_tags" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')],'required': [('xtracta_table_type', '=', 'order')]}" />-->
+                                <field name="xtracta_default_obj" widget="boolean_toggle"
+                                attrs="{'invisible': [('xtracta_table_type', '!=', 'order')],'required': [('xtracta_table_type', '=', 'order')]}"/>
+                                <field name="team_id" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')],'required': [('xtracta_table_type', '=', 'order')]}" />
+                                <field name="api_download_status" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="analytic_account_id" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')]}"/>
+                                <field name="xtracta_account_income_categ_id" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')]}"/>
+                                <field name="xtracta_account_expense_categ_id" attrs="{'invisible': [('xtracta_table_type', '!=', 'order')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="xtracta_database_view_kanban" model="ir.ui.view">
+            <field name="name">Xtracta Database Kanban</field>
+            <field name="model">xtracta.database</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_account_kanban">
+                    <!-- <field name="id" /> -->
+                    <field name="name"/>
+                    <field name="color"/>
+                    <field name="xtracta_table_type"/>
+                    <field name="total_customer"/>
+                    <field name="total_product"/>
+                    <field name="total_order" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                                <!--                                <t t-value="record.name.raw_value" t-set="marketplace_type"/>-->
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <a type="object" name="xtracta_open_instance_view">
+                                                <field name="name"/>
+                                            </a>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                    </div>
+                                    <div class="o_kanban_manage_button_section">
+                                        <a class="o_kanban_manage_toggle_button" href="#">
+                                            <i class="fa fa-ellipsis-v" aria-label="Selection" role="img"
+                                               title="Selection"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content">
+                                    <div class="row mt16">
+                                        <div class="col-3 border-right">
+                                            <t t-if="record.xtracta_table_type.raw_value == 'customer'">
+                                                <a name="action_redirect_to_customer"
+                                                   type="object" class="d-flex flex-column align-items-center">
+                                                    <span class="font-weight-bold">
+                                                        <t t-esc="record.total_customer.value"/>
+                                                    </span>
+                                                    <span class="text-muted">Customers</span>
+                                                </a>
+                                            </t>
+                                            <t t-if="record.xtracta_table_type.raw_value == 'product'">
+                                                <a name="action_redirect_to_product"
+                                                   type="object" class="d-flex flex-column align-items-center">
+                                                    <span class="font-weight-bold">
+                                                        <t t-esc="record.total_product.value"/>
+                                                    </span>
+                                                    <span class="text-muted">Products</span>
+                                                </a>
+                                            </t>
+                                            <t t-if="record.xtracta_table_type.raw_value == 'order'">
+                                                <a name="action_redirect_to_order"
+                                                   type="object" class="d-flex flex-column align-items-center">
+                                                    <span class="font-weight-bold">
+                                                        <t t-esc="record.total_order.value"/>
+                                                    </span>
+                                                    <span class="text-muted">Orders</span>
+                                                </a>
+                                            </t>
+                                        </div>
+                                        <div class="col-3 border-right">
+                                            <a name="action_redirect_to_column"
+                                               type="object" class="d-flex flex-column align-items-center">
+                                                <span class="font-weight-bold">
+                                                    <i class="fa fa-list-ol" title="Column"/>
+                                                </span>
+                                                <span class="text-muted">Column</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-3 border-right">
+                                            <a name="action_redirect_to_log"
+                                               type="object" class="d-flex flex-column align-items-center">
+                                                <span class="font-weight-bold">
+                                                    <i class="fa fa-book" title="Log"/>
+                                                </span>
+                                                <span class="text-muted">Log Message</span>
+                                            </a>
+                                        </div>
+                                        <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                            <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                                <div class="col-8" role="menuitem" aria-haspopup="true">
+                                                    <ul role="menu" class="oe_kanban_colorpicker" data-field="color"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="xtracta_database_action" model="ir.actions.act_window">
+            <field name="name">Xtracta Database</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">xtracta.database</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+        
+        <menuitem id="xtracta_database_root" name="Xtracta Database"
+                  action="xtracta_database_action" sequence="2"
+                    web_icon="xtracta_odoo_integration,static/description/xtracta.jpg"/>
+
+    </data>
+</odoo>

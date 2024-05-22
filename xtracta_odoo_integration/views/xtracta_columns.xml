@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="xtracta_columns_view_tree" model="ir.ui.view">
+            <field name="name">xtracta_columns_view_tree</field>
+            <field name="model">xtracta.columns</field>
+            <field name="arch" type="xml">
+                <tree string="xtracta_columns_tree" create="0">
+                    <field name="column_id"/>
+                    <field name="column_name"/>
+                    <field name="column_group_id"/>
+                    <field name="column_database_id"/>
+                    <field name="xtracta_database_id" />
+                </tree>
+            </field>
+        </record>
+        <record id="xtracta_form_view_form" model="ir.ui.view">
+            <field name="name">xtracta_form_view_form</field>
+            <field name="model">xtracta.columns</field>
+            <field name="arch" type="xml">
+                <form string="xtracta_form_form" create="0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="column_name" readonly="1"/>
+                                <field name="column_id" readonly="1"/>
+                                <field name="customer_field"  attrs="{'invisible': [('table_type', '!=', 'customer')]}" string="Odoo Field"/>
+                                <field name="product_field" attrs="{'invisible': [('table_type', '!=', 'product')]}" string="Odoo Field"/>
+                            </group>
+                            <group>
+                                <field name="column_group_id" readonly="1" />
+                                <field name="column_database_id" readonly="1" />
+                                <field name="xtracta_database_id" readonly="1"/>
+                                <field name="table_type" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="xtracta_columns_action" model="ir.actions.act_window">
+            <field name="name">Xtracta Columns Action </field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">xtracta.columns</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="xtracta_columns_categ" name="XTRACTA COLUMN" parent="xtracta_odoo_integration.xtracta_database_root"
+                  action="xtracta_columns_action"
+                  sequence="1"/>
+    </data>
+</odoo>

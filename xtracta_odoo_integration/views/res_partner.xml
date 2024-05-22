@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="xtracta_res_partner_field_from" model="ir.ui.view">
+            <field name="name">Xtracta Res Partner Field</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Xtracta Information" name="xtracta_information"
+                          attrs="{'invisible':[('type','=','supplier')]}">
+                        <group>
+                            <group>
+                                <field name="is_export_to_xtracta" readonly="1"/>
+                                <field name="xtracta_database_id" readonly="1"/>
+                                <field name="xtracta_row_id" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="xtracta_res_partner_action" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new customer in your address book
+                </p><p>
+                Odoo helps you easily track all activities related to a customer.
+            </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="xtracta_form_view" model="ir.ui.view">
+            <field name="name">Xtracta Field Form View</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="order_has_error" widget="boolean_toggle" readonly="1"
+                           string="Some Wrong In Xtracta Order"/>
+                </xpath>
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Xtracta" id="xtracta">
+                        <group>
+                            <group>
+                                <field name="xtracta_order_status" readonly="1"/>
+                                <field name="xtracta_document_id" readonly="1"/>
+                                <field name="xtracta_document_url" readonly="1" widget="url"/>
+                                <field name="xtracta_configuration_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <button type="object" string="Archive The Document" name="xtracta_archive_order"
+                                attrs="{'invisible': [('xtracta_order_status', '=', 'archived')]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="xtracta_sale_order_action" model="ir.actions.act_window">
+            <field name="name">Xtracta Sale Order Action</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
